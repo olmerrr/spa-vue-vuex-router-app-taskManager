@@ -5,13 +5,14 @@
       <form>
         <div class="input-field">
           <input
+            v-model="title"
             placeholder="Title"
             id="first_name"
             type="text"
             class="validate"
             required
           />
-          <label for="title">Title</label>
+          <label for="title" >Title</label>
           <span class="helper-text" data-error="Title is required"></span>
         </div>
         <div class="chips" ref="chips"></div>
@@ -24,8 +25,9 @@
           >
           </textarea>
           <label for="description">Textarea</label>
-          <span class="character-counter">{{ description.length }}/50</span>
+          <span class="character-counter">{{ description.length }}/2050</span>
         </div>
+        <input type="text" ref="datepicker"/>
       </form>
     </div>
   </div>
@@ -37,6 +39,11 @@ export default {
   mounted() {
     M.Chips.init(this.$refs.chips, {
       placeholder: "Task tags",
+    }),
+    M.Datepicker.init(this.$refs.datepicker,{
+      format: 'dd.mm.yyyy',
+      defaultDate: new Date(),
+      setDefaultDate: true
     });
   },
   data() {
