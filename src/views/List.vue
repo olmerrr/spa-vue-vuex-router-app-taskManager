@@ -19,8 +19,8 @@
           <td>{{ idx + 1 }}</td>
           <td>{{ task.title }}</td>
           <td>{{ task.date }}</td>
-          <td>
-            <div>{{ task.description }}</div>
+          <td class="custom-td">
+            <div class="text">{{ task.description }}</div>
           </td>
           <td>{{ task.status }}</td>
           <td>
@@ -51,4 +51,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.custom-td {
+  max-width: 400px;
+}
+.text {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 </style>
