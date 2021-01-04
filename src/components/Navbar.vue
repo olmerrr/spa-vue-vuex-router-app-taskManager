@@ -1,7 +1,7 @@
 <template>
   <nav class="nav">
-    <div class="nav-wrapper">
-      <router-link to="/" class="brand-logo">TasksMeneger</router-link>
+
+      <router-link to="/" class="brand-logo">TasksManager</router-link>
       <ul class="right hide-on-med-and-down">
         <router-link to="/" tag="li" exact active-class="active"
           ><a href="#">Create</a>
@@ -10,7 +10,6 @@
           ><a href="#">List</a>
         </router-link>
       </ul>
-    </div>
   </nav>
 </template>
 
@@ -18,7 +17,7 @@
 export default {};
 </script>
 <style lang="scss" scoped>
-.nav-wrapper {
-  padding: 0 2rem;
+.nav .logo{
+  left: 2rem;
 }
 </style>
