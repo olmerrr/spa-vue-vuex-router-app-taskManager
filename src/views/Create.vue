@@ -2,11 +2,10 @@
   <div class="row">
     <div class="col s6 offset-s3">
       <h2>Create Task</h2>
-      <form>
+      <form @submit.prevent="submitHandler">
         <div class="input-field">
           <input
             v-model="title"
-            placeholder="Title"
             id="first_name"
             type="text"
             class="validate"
@@ -28,6 +27,7 @@
           <span class="character-counter">{{ description.length }}/2050</span>
         </div>
         <input type="text" ref="datepicker"/>
+        <button class="btn" type="submit">Create Task</button>
       </form>
     </div>
   </div>
@@ -36,21 +36,44 @@
 <script>
 export default {
   name: "Create",
+  data() {
+    return {
+      description: "",
+      title: "",
+      chips: null,
+      date: null
+    };
+  },
   mounted() {
-    M.Chips.init(this.$refs.chips, {
+    this.chips = M.Chips.init(this.$refs.chips, {
       placeholder: "Task tags",
     }),
-    M.Datepicker.init(this.$refs.datepicker,{
+    this.date = M.Datepicker.init(this.$refs.datepicker,{
       format: 'dd.mm.yyyy',
       defaultDate: new Date(),
       setDefaultDate: true
     });
   },
-  data() {
-    return {
-      description: "",
-      title: "",
-    };
+  methods: {
+    submitHandler() {
+      const task = {
+        title: this.title,
+        description: this.description,
+        id : Date.now(),
+        status: 'active',
+        tags: this.chips.chipsData,
+        date: this.date.date
+      }
+      console.log(task)
+    },
+  },
+  destroyed() {
+    if(this.date && this.date.destroy) {
+      this.date.destroy()
+    }
+    if(this.chips && this.date.destroy) {
+      this.chips.destroy()
+    }
   },
 };
 </script>
