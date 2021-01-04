@@ -23,7 +23,7 @@
             v-model="description"
           >
           </textarea>
-          <label for="description">Textarea</label>
+          <label for="description">Description</label>
           <span class="character-counter">{{ description.length }}/2050</span>
         </div>
         <input type="text" ref="datepicker"/>
@@ -64,7 +64,9 @@ export default {
         tags: this.chips.chipsData,
         date: this.date.date
       }
-      console.log(task)
+      this.$store.dispatch('ceateTask', task);
+      this.$router.push('/list');
+      //после создания задачи я переадресую на стр /list
     },
   },
   destroyed() {
