@@ -64,6 +64,7 @@ export default {
         tags: this.chips.chipsData,
         date: this.date.date
       }
+      
       this.$store.dispatch('ceateTask', task);
       this.$router.push('/list');
       //после создания задачи я переадресую на стр /list

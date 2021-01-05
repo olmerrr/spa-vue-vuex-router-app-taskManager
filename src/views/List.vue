@@ -18,19 +18,15 @@
         <tr v-for="(task, idx) of tasks" :key="task.id">
           <td>{{ idx + 1 }}</td>
           <td>{{ task.title }}</td>
-          <td>{{ task.date }}</td>
+          <td>{{ new Date (task.date).toLocaleDateString() }}</td>
           <td class="custom-td">
             <div class="text">{{ task.description }}</div>
           </td>
           <td>{{ task.status }}</td>
           <td>
-            <router-link
-              tag="button"
-              class="btn btn-small"
-              :to="'/task' + task.id"
-            >
-              Open
-            </router-link>
+          <router-link tag="button" class="btn btn-small" :to="'/task/' + task.id">
+            Open
+          </router-link>
           </td>
         </tr>
       </tbody>
@@ -43,9 +39,10 @@
 
 <script>
 export default {
+  name: 'list',
   computed: {
     tasks() {
-      return this.$store.getters.tasks;
+      return this.$store.getters.tasks
     },
   },
 };
