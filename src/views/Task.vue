@@ -3,8 +3,7 @@
     <div v-if="task" class="col s6 offset-s3">
       <h2>{{ task.title }}</h2>
       <form @submit.prevent="submitHandler">
-        <div class="input-field">
-        </div>
+        <div class="input-field"></div>
         <div class="chips" ref="chips"></div>
 
         <div class="input-field">
@@ -18,9 +17,16 @@
           <span class="character-counter">{{ description.length }}/2050</span>
         </div>
         <input type="text" ref="datepicker" />
-        <button class="btn" type="submit">Create Task</button>
-        <button class="btn blue btn-finish" type="button">Finish Task</button>
-
+        <div v-if="task.status !== 'complited'">
+          <button class="btn" type="submit">Update Task</button>
+          <button
+            class="btn blue btn-finish"
+            type="button"
+            @click="completeTask"
+          >
+            Finish Task
+          </button>
+        </div>
       </form>
     </div>
     <p v-else>Task not found</p>
@@ -31,36 +37,44 @@ export default {
   name: "task",
   data() {
     return {
-      description: '',
+      description: "",
       chips: null,
-      date: null
-    }
+      date: null,
+    };
   },
   mounted() {
-    this.description = this.task.description
-    this.chips = M.Chips.init(this.$refs.chips, {
+    this.description = this.task.description;
+    (this.chips = M.Chips.init(this.$refs.chips, {
       placeholder: "Task tags",
-      data: this.task.tags
-    }),
-    this.date = M.Datepicker.init(this.$refs.datepicker,{
-      format: 'dd.mm.yyyy',
-      defaultDate: new Date(),
-      setDefaultDate: true
-    });
+      data: this.task.tags,
+    })),
+      (this.date = M.Datepicker.init(this.$refs.datepicker, {
+        format: "dd.mm.yyyy",
+        defaultDate: new Date(this.task.date),
+        setDefaultDate: true,
+      }));
   },
   methods: {
     submitHandler() {
-      this.$store.dispatch('createTask', task)
-      this.$router.push('/list')
+      this.$store.dispatch("updateTask", {
+        id: this.task.id,
+        description: this.description,
+        date: this.date.date,
+      });
+      this.$router.push("/list");
+    },
+    completeTask() {
+      this.$store.dispatch("completeTask", this.task.id);
+      this.$router.push("/list");
     },
   },
   destroyed() {
-    if(this.date && this.date.destroy) {
-      this.date.destroy()
+    if (this.date && this.date.destroy) {
+      this.date.destroy();
     }
-    if(this.chips && this.chips.destroy) {
-      this.chips.destroy()
-  }
+    if (this.chips && this.chips.destroy) {
+      this.chips.destroy();
+    }
   },
   computed: {
     task() {
@@ -72,7 +86,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .btn-finish {
-    margin-left: 1rem;
-  }
+.btn-finish {
+  margin-left: 1rem;
+}
 </style>
