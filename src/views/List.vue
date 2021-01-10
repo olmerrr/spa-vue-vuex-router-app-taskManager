@@ -3,7 +3,7 @@
     <h2>List</h2>
     <div class="row">
       <div class="input-field col s6">
-        <select ref="select">
+        <select ref="select" v-model="filter">
           <option value="" disabled selected>Choose your option</option>
           <option value="active">Active</option>
           <option value="outdated">Outdated</option>
@@ -11,7 +11,13 @@
         </select>
         <label>Status Filter</label>
       </div>
+      <button class="btn btn-small col" 
+      v-if="filter" 
+      @click="filter = null">
+      Clear Filter
+    </button>
     </div>
+    
 
     <hr />
     <table v-if="tasks.length">
@@ -27,7 +33,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="(task, idx) of tasks" :key="task.id">
+        <tr v-for="(task, idx) of displayTasks" :key="task.id">
           <td>{{ idx + 1 }}</td>
           <td>{{ task.title }}</td>
           <td>{{ new Date(task.date).toLocaleDateString() }}</td>
@@ -56,9 +62,22 @@
 <script>
 export default {
   name: "list",
+  data() {
+    return {
+      filter: null,
+    };
+  },
   computed: {
     tasks() {
       return this.$store.getters.tasks;
+    },
+    displayTasks() {
+      return this.tasks.filter((t) => {
+        if (!this.filter) {
+          return true;
+        }
+        return t.status === this.filter;
+      });
     },
   },
   mounted() {
