@@ -1,6 +1,5 @@
 <template>
   <nav class="nav">
-
       <router-link to="/" class="brand-logo">TasksManager</router-link>
       <ul class="right hide-on-med-and-down">
         <router-link to="/" tag="li" exact active-class="active"
@@ -13,11 +12,11 @@
   </nav>
 </template>
 
-<script>
-export default {};
-</script>
 <style lang="scss" scoped>
-.nav .logo{
-  left: 2rem;
+.nav {
+  text-align: left;
+  }
+.brand-logo{
+  left: 15px;
 }
 </style>
